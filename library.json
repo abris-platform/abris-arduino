@@ -1,0 +1,22 @@
+{
+    "name": "AbrisPlatform",
+    "description": "AbrisPlatform connection",
+    "keywords": "http, sensor, database, server, client, abris",
+    "authors": [
+        {
+            "name": "Ivan Pchelincev",
+            "email": "pchel.21@yandex.ru",
+            "maintainer": true
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://abrisplatform.com"
+    },
+    "version": "0.0.1",
+    "homepage": "https://abrisplatform.com",
+    "frameworks": "Arduino",
+    "examples": [
+        "examples/*/*.pde"
+    ]
+}
