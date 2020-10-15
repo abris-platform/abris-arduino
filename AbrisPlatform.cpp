@@ -10,11 +10,11 @@ AbrisPlatform::AbrisPlatform(HTTPClient * http){
 
 AbrisPlatform::AbrisPlatform(HTTPClient * http, const char * addres){
 	this->http = http;
-	this->addres = "http://"addres"/Server/request.php";
+	this->addres = "http://"+ String(addres) + "/Server/request.php";
 };
 		
 AbrisPlatform::~AbrisPlatform(){
-	
+	delete  http;
 };
 		
 		
@@ -24,7 +24,7 @@ void AbrisPlatform::setHTTPClient(HTTPClient * http){
 };
 
 void AbrisPlatform::setHTTPAddres(const char * addres){
-	this->addres = "http://"addres"/Server/request.php";;
+	this->addres = "http://" + String(addres) + "/Server/request.php";;
 };
 
 void AbrisPlatform::getCookie(){
@@ -40,7 +40,7 @@ void AbrisPlatform::getCookie(){
 };
 
 
-bool AbrisPlatform::authenticate(const char * login, const char * password){
+String AbrisPlatform::authenticate(const char * login, const char * password){
 	this->getCookie();
 	String request;      
 	request = "method=authenticate&";
@@ -49,10 +49,27 @@ bool AbrisPlatform::authenticate(const char * login, const char * password){
 	http->addHeader("Cookie",  this->cookie);
 	this->http_code = http->POST(request); 
 	
+	jsonDocument.clear();
+	deserializeJson(jsonDocument, http->getString());
+	
+	if((jsonDocument["result"][0]["usename"] == login) && !jsonDocument["error"]){
+		this->login = login;
+		this->password = password;
+		this->authenticateUser = true;
+	}
+	else{
+		this->authenticateUser = false;
+	}
+	
+	return  http->getString();
+
+	
 };
 
 String AbrisPlatform::update(const char * schema , const char * table, const char * jsonFieldsValue, const String arrKey[], const char * jsonKeyValue){
-	  
+	
+	if(!this->authenticateUser) return "error authenticate";
+	
 	String request;
     request = "method=updateEntity&";
 	request += "params=[{";
@@ -88,12 +105,16 @@ String AbrisPlatform::update(const char * schema , const char * table, const cha
     http->addHeader("Cookie",  this->cookie);
     http->setTimeout(3000);
     this->http_code = http->POST(request);
+	
 	return http->getString();
-
+	
    
 };
 
 String AbrisPlatform::insert(const char * schema , const char * table, const char * jsonFieldsValue, const char * key){
+	
+	if(!this->authenticateUser) return "error authenticate";
+	
 	String request;
     request = "method=addEntities&";
 	request += "params=[{";
@@ -109,8 +130,13 @@ String AbrisPlatform::insert(const char * schema , const char * table, const cha
     http->addHeader("Cookie",  this->cookie);
     http->setTimeout(3000);
     this->http_code = http->POST(request);
+   
 	return http->getString();
 };
+
+bool AbrisPlatform::getAuthenticateUser(){
+	return this->authenticateUser;
+}
 
 
 

@@ -1,2 +1,72 @@
-# abris-arduino
-Arduino library
+# Arduino Library for Abrisplatform
+(https://abrisplatform.com)
+
+
+## Installation procedure
+
+### Library connection : ESP8266HTTPClient, ArduinoJson, ESP8266WiFi.
+
+> https://github.com/esp8266/Arduino
+
+> https://github.com/bblanchon/ArduinoJson
+
+> https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html
+
+
+## Description
+
+### SetHTTPClient
+
+Set the server address.
+```c++
+void setHTTPClient(HTTPClient *http);
+```
+**Important** - the method is called before `authenticate`.
+
+### SetHTTPAddres
+
+Set the address HTTPClient object.
+```c++
+void setHTTPAddres(const char * addres);
+```
+**Important** - the method is called before `authenticate`.
+
+### Authenticate
+
+#### Authenticate - database connection.
+```c++
+void authenticate(const char * login, const char * password);
+```
+#### Params:
+- `login` - database login, 
+- `password` - database password.
+#### Example:
+```c++
+abrisplatform.authenticate("postgres","12345678");
+```
+### Insert
+
+#### Insert - create new rows in a table.
+```c++
+String insert(const char * schema , const char * table, const char * jsonFieldsValue, const char * key);
+```
+#### Params:
+- `schema` -  database schema name,
+- `table` -  database table name,
+- `jsonFieldsValue` - json data ( column  : value ),
+- `key` - primary key column.
+#### Example:
+```c++
+abrisplatform.insert("public", "sensor", {"field1":"value1", "field2":"value2"}, "sensor_key");
+```
+#### SQL: 
+```sql
+INSERT INTO public.sensor(field1,field2) VALUE ('value1','value2')
+```
+
+### Update
+
+Update - — update rows of a table.
+
+###
+
