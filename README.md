@@ -17,19 +17,36 @@
 
 ### SetHTTPClient
 
-Set the server address.
+Set the address HTTPClient object.
 ```c++
 void setHTTPClient(HTTPClient *http);
 ```
+#### Params:
+- `http` - HTTPClient object address.
+#### Example:
+```c++
+HTTPClient http;
+abrisplatform.setHTTPClient(&http);
+```
+
 **Important** - the method is called before `authenticate`.
+
 
 ### SetHTTPAddres
 
-Set the address HTTPClient object.
+Set the server address
 ```c++
 void setHTTPAddres(const char * addres);
 ```
+#### Params:
+- `addres` - server address.
+#### Example:
+```c++
+abrisplatform.setHTTPAddres("localhost");
+```
+
 **Important** - the method is called before `authenticate`.
+
 
 ### Authenticate
 
@@ -44,6 +61,8 @@ void authenticate(const char * login, const char * password);
 ```c++
 abrisplatform.authenticate("postgres","12345678");
 ```
+
+
 ### Insert
 
 #### Insert - create new rows in a table.
@@ -63,6 +82,7 @@ abrisplatform.insert("public", "sensor", {"field1":"value1", "field2":"value2"},
 ```sql
 INSERT INTO public.sensor(field1,field2) VALUE ('value1','value2')
 ```
+
 
 ### Update
 
