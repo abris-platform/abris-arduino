@@ -66,7 +66,28 @@ INSERT INTO public.sensor(field1,field2) VALUE ('value1','value2')
 
 ### Update
 
-Update - — update rows of a table.
+#### Update - update rows of a table.
+```c++
+String update(const char * schema , const char * table, const char * jsonFieldsValue, const String arrKey[], const char * jsonKeyValue);
+```
+#### Params:
+- `schema` -  database schema name,
+- `table` -  database table name,
+- `jsonFieldsValue` - json update data( column  : value ),
+- `arrKey` -  column name for "WHERE" condition ([column1, column2]),
+- `jsonKeyValue` -  values of "WHERE" condition column in json format ( column : value or column : [value1, value2]).
+#### Example:
+```c++
+abrisplatform.update("public", "sensor", {"field1":"value1", "field2":"value2"}, ["fieldKey1","fieldKey2"],{"fieldKey1":["1","2"],"fieldKey2":["11","12]});
+```
+#### SQL:
+```sql
+UPDATE public.sensor SET field1='value1', field2='value2' WHERE fieldKey1 = '1' AND fieldKey2 = '11';
+```
 
-###
+```sql
+UPDATE public.sensor SET field1='value1', field2='value2' WHERE fieldKey1 = '2' AND fieldKey2 = '12';
+```
+
+
 
