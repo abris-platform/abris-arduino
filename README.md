@@ -38,17 +38,17 @@ abrisplatform.setHTTPClient(&http);
 **Important** - the method is called before `authenticate`.
 
 
-### SetHTTPAddres
+### SetHTTPAddress
 
 Set the server address
 ```c++
-void setHTTPAddres(const char * addres);
+void setHTTPAddress(const char * address);
 ```
 #### Params:
-- `addres` - server address.
+- `address` - server address.
 #### Example:
 ```c++
-abrisplatform.setHTTPAddres("localhost");
+abrisplatform.setHTTPAddress("localhost");
 ```
 
 **Important** - the method is called before `authenticate`.
