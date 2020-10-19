@@ -66,7 +66,7 @@ String AbrisPlatform::authenticate(const char * login, const char * password){
 	
 };
 
-String AbrisPlatform::update(const char * schema , const char * table, const char * jsonFieldsValue, const String arrKey[], const char * jsonKeyValue){
+String AbrisPlatform::update(const char * schema , const char * table, const char * jsonFieldsValue, const char * jsonKeyValue){
 	
 	if(!this->authenticateUser) return "error authenticate";
 	
@@ -80,12 +80,15 @@ String AbrisPlatform::update(const char * schema , const char * table, const cha
 	String requestKeys = "[";
 	String valueKeys = "[";
 	String valueKey = "";
+		
 	
-	for(int i=0; i<arrKey->length(); i++){
-		serializeJson(jsonDocument[arrKey[i]],  valueKey);
-		valueKeys += ""+valueKey +",";
-		requestKeys += "\""+arrKey[i] + "\",";
-		valueKey = "";
+	JsonObject root = jsonDocument.as<JsonObject>();
+	String rrrr;
+	for(JsonPair kv:root) {	
+		serializeJson(kv.value(), valueKey);
+		valueKeys += ""+ valueKey +",";
+		requestKeys += "\""+ String(kv.key().c_str()) + "\",";
+		valueKey = "";	
 	}
 	
 	valueKeys = valueKeys.substring(0,valueKeys.length()-1);

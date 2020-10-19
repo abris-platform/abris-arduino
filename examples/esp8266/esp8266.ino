@@ -11,12 +11,12 @@
 HTTPClient http;
 int flag_connect_wifi=0;
 
-const char * loginWiFi = "loginWIFI";
-const char * passWiFi = "passwordWIFI";
+const char * loginWiFi = "hideNetwork";
+const char * passWiFi = "niisu123456";
 
 const char * loginDB = "postgres";
-const char * passDB = "1234567";
-const char * addreServer = "server address";
+const char * passDB = "123456";
+const char * addreServer = "192.168.0.25";
 
 AbrisPlatform abris(&http, addreServer);
 
@@ -25,7 +25,6 @@ DallasTemperature DALLAS(&oneWire);
 
 StaticJsonDocument<400> jsonDocument;
 
-String updateSensorKey[2] = {"id","id_esp"};
 String jsonKeyValue;
 String jsonFieldsValue; 
 
@@ -37,39 +36,44 @@ void setup() {
 
   DALLAS.begin();
   pinMode(2, OUTPUT); 
+  
+  if(flag_connect_wifi){
+     jsonDocument["ip"] = WiFi.localIP().toString();
+     serializeJson(jsonDocument, jsonFieldsValue);   
+     abris.update("public","esp", jsonFieldsValue.c_str() ,"{\"id\":\"1\"}"); ///< IP addres update
+  }
+
+  jsonDocument.clear(); 
+  jsonKeyValue = "";
+  jsonDocument["id"][0]= NUM_SENSOR_TEMP; 
+  jsonDocument["id_esp"][0]= NUM_ESP; 
+  serializeJson(jsonDocument, jsonKeyValue);  ///< "jsonKeyValue" initialization
 
 }
 
 void loop() {
  if(flag_connect_wifi){
   
-  jsonDocument.clear();
   jsonFieldsValue = "";
   jsonDocument["value"] = String(sensorTemp());
   serializeJson(jsonDocument, jsonFieldsValue);
-  
-  jsonDocument.clear(); 
-  jsonKeyValue = "";
-  jsonDocument[updateSensorKey[0]][0]= NUM_SENSOR_TEMP; 
-  jsonDocument[updateSensorKey[1]][0]= NUM_ESP; 
-  serializeJson(jsonDocument, jsonKeyValue);
-  
-  abris.update("public","sensor", jsonFieldsValue.c_str(), updateSensorKey, jsonKeyValue.c_str());
+  abris.update("public","sensor", jsonFieldsValue.c_str(), jsonKeyValue.c_str());
 
-  digitalWrite(2, HIGH);
-  delay(1000);  
-  digitalWrite(2, LOW);
-  delay(1000);     
+  LEDFlashing(1000); 
  }
  else{
   flag_connect_wifi = wifi_client(loginWiFi, passWiFi);
-  digitalWrite(2, HIGH);
-  delay(5000);  
-  digitalWrite(2, LOW);
-  delay(5000); 
+  LEDFlashing(5000);
  }
 
  
+}
+
+void LEDFlashing(int flashTime){
+  digitalWrite(2, HIGH);
+  delay(flashTime);  
+  digitalWrite(2, LOW);
+  delay(flashTime); 
 }
 
 int sensorTemp(){

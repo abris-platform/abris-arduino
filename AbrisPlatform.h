@@ -61,11 +61,10 @@ class AbrisPlatform {
 		 * \param[in] schema Database schema name
 		 * \param[in] table Database table name
 		 * \param[in] jsonFieldsValue  Json update data(column:value)
-		 * \param[in] arrKey Column name for "WHERE" condition ([column1, column2])
 		 * \param[in] jsonKeyValue Values of "WHERE" condition column in json format (column:value or column:[value1,value2])
 		 * \return Server response
 		*/
-		String update(const char * schema , const char * table, const char * jsonFieldsValue, const String arrKey[], const char * jsonKeyValue);
+		String update(const char * schema , const char * table, const char * jsonFieldsValue, const char * jsonKeyValue);
 		
 		/*! Authenticate - database connection
 		 * \param[in] schema Database schema name
@@ -86,7 +85,7 @@ class AbrisPlatform {
 		
 		HTTPClient * http = new HTTPClient(); ///< HTTPClient object address
 		String login; ///< Database login
-        String password; ///< Database password
+		String password; ///< Database password
 		String addres; ///< Server address
 		String cookie; ///< Cookie data
 		bool authenticateUser = "false"; ///< Database connection flag
