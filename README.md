@@ -4,6 +4,12 @@
 
 ## Installation procedure
 
+### Setting arduno for the esp8266 firmware
+> https://www.arduino.cc/en/Guide/Libraries
+
+### Installing additional arduino libraries
+> https://www.arduino.cc/en/Guide/Libraries
+
 ### Library connection : ESP8266HTTPClient, ArduinoJson, ESP8266WiFi.
 
 > https://github.com/esp8266/Arduino
