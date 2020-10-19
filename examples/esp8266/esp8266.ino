@@ -11,12 +11,12 @@
 HTTPClient http;
 int flag_connect_wifi=0;
 
-const char * loginWiFi = "hideNetwork";
-const char * passWiFi = "niisu123456";
+const char * loginWiFi = "WiFi";
+const char * passWiFi = "123456";
 
 const char * loginDB = "postgres";
 const char * passDB = "123456";
-const char * addreServer = "192.168.0.25";
+const char * addreServer = "192.168.0.1";
 
 AbrisPlatform abris(&http, addreServer);
 
