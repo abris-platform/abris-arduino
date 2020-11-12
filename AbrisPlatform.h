@@ -13,10 +13,9 @@
 #include <stdint.h>
 #include <ArduinoJson.h>
 
+
 class AbrisPlatform {
-	
 	public:
-	
 		/*! 
 		 * Abrisplatform class constructor 
 		*/
@@ -31,9 +30,9 @@ class AbrisPlatform {
 		/*! 
 		 * Abrisplatform class constructor 
 		 * \param[in] http HTTPClient object address
-		 * \param[in] addres Server address
+		 * \param[in] address Server address
 		*/
-		AbrisPlatform(HTTPClient * http, const char * addres);
+		AbrisPlatform(HTTPClient * http, const char * address);
 		
 		 /*! Abrisplatform class destructor */
 		~AbrisPlatform();
@@ -46,9 +45,9 @@ class AbrisPlatform {
 		
 		/*! 
 		 * Abrisplatform class destructor 
-		 * \param[in] addres Server address
+		 * \param[in] address Server address
 		*/
-		void setHTTPAddres(const char * addres);
+		void setHTTPAddress(const char * address);
 		
 		/*! Authenticate - database connection
 		 * \param[in] login Database login
@@ -64,7 +63,7 @@ class AbrisPlatform {
 		 * \param[in] jsonKeyValue Values of "WHERE" condition column in json format (column:value or column:[value1,value2])
 		 * \return Server response
 		*/
-		String update(const char * schema , const char * table, const char * jsonFieldsValue, const char * jsonKeyValue);
+		String update(const char * schema, const char * table, const char * jsonFieldsValue, const char * jsonKeyValue);
 		
 		/*! Authenticate - database connection
 		 * \param[in] schema Database schema name
@@ -73,7 +72,7 @@ class AbrisPlatform {
 		 * \param[in] key Primary key column
 		 * \return Server response
 		*/
-		String insert(const char * schema , const char * table, const char * jsonFieldsValue, const char * key);
+		String insert(const char * schema, const char * table, const char * jsonFieldsValue, const char * key);
 		
 		/*! Get database connection flag */
 		bool getAuthenticateUser();
@@ -81,23 +80,19 @@ class AbrisPlatform {
 		int http_code; ///< Server response code
 		
 		
-	private:
-		
+	private:	
 		HTTPClient * http = new HTTPClient(); ///< HTTPClient object address
 		String login; ///< Database login
 		String password; ///< Database password
-		String addres; ///< Server address
+		String address; ///< Server address
 		String cookie; ///< Cookie data
-		bool authenticateUser = "false"; ///< Database connection flag
+		bool authenticateUser = false; ///< Database connection flag
 		
-		const char * headerKeys[2] = {"Cookie", "Set-Cookie"}; ///< Key array for POST request header
+		const char * headerKeys[2] = { "Cookie", "Set-Cookie" }; ///< Key array for POST request header
         const size_t numberOfHeaders = 2; ///< Number of keys for POST request header
 		StaticJsonDocument<400> jsonDocument; ///< StaticJsonDocument class object
 		
 		/*! Сookie data from server */
 		void getCookie();
-		
-
-	
 };
 #endif

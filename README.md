@@ -4,7 +4,7 @@
 
 ## Installation procedure
 
-### Setting arduno for the esp8266 firmware
+### Setting arduino for the esp8266 firmware
 > https://www.arduino.cc/en/Guide/Libraries
 
 ### Installing additional arduino libraries
@@ -65,7 +65,7 @@ void authenticate(const char * login, const char * password);
 - `password` - database password.
 #### Example:
 ```c++
-abrisplatform.authenticate("postgres","12345678");
+abrisplatform.authenticate("username", "password");
 ```
 
 
@@ -86,7 +86,7 @@ abrisplatform.insert("public", "sensor", {"field1":"value1", "field2":"value2"},
 ```
 #### SQL: 
 ```sql
-INSERT INTO public.sensor(field1,field2) VALUE ('value1','value2')
+INSERT INTO public.sensor(field1,field2) VALUE ('value1','value2');
 ```
 
 
@@ -94,7 +94,7 @@ INSERT INTO public.sensor(field1,field2) VALUE ('value1','value2')
 
 #### Update - update rows of a table.
 ```c++
-String update(const char * schema , const char * table, const char * jsonFieldsValue, const char * jsonKeyValue);
+String update(const char * schema, const char * table, const char * jsonFieldsValue, const char * jsonKeyValue);
 ```
 #### Params:
 - `schema` -  database schema name,
@@ -103,7 +103,7 @@ String update(const char * schema , const char * table, const char * jsonFieldsV
 - `jsonKeyValue` -  values of "WHERE" condition column in json format ( column : value or column : [value1, value2]).
 #### Example:
 ```c++
-abrisplatform.update("public", "sensor", {"field1":"value1", "field2":"value2"},{"fieldKey1":["1","2"],"fieldKey2":["11","12]});
+abrisplatform.update("public", "sensor", { "field1":"value1", "field2":"value2" }, { "fieldKey1":["1", "2"], "fieldKey2":["11", "12"] });
 ```
 #### SQL:
 ```sql
@@ -113,6 +113,3 @@ UPDATE public.sensor SET field1='value1', field2='value2' WHERE fieldKey1 = '1' 
 ```sql
 UPDATE public.sensor SET field1='value1', field2='value2' WHERE fieldKey1 = '2' AND fieldKey2 = '12';
 ```
-
-
-
